@@ -29,20 +29,9 @@ Check the current weather on any city on the planet. Switch between metric and i
 
 3. `npm install`
 
+4. set NODE_OPTIONS=--openssl-legacy-provider
 
-
-set NODE_OPTIONS=--openssl-legacy-provider
-npm run dev
-
-4. Log-in to [Openweathermap.com](https://openweathermap.org/)
-
-5. Create an API key
-
-6. `cp .env.example .env.local`
-
-7. Paste API key for `OPENWEATHER_API_KEY`
-
-8. `npm run dev`
+5. npm run dev
 
 ## Contributions
 
