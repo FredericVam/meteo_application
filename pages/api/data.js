@@ -1,8 +1,43 @@
 export default async function handler(req, res) {
-  const { cityInput } = req.body;
-  const getWeatherData = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&units=metric&appid=${process.env.OPENWEATHER_API_KEY}`
-  );
-  const data = await getWeatherData.json();
-  res.status(200).json(data);
+  try {
+    const { city, latitude, longitude } = req.body;
+
+    const response = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,is_day&daily=sunrise,sunset&timezone=auto`
+    );
+
+    const data = await response.json();
+
+    const current = data.current;
+    const daily = data.daily;
+
+    res.status(200).json({
+      name: city,
+      sys: {
+        country: "",
+        sunrise: Math.floor(new Date(daily.sunrise[0]).getTime() / 1000),
+        sunset: Math.floor(new Date(daily.sunset[0]).getTime() / 1000),
+      },
+      weather: [
+        {
+          description: "Weather info",
+          icon: "01d",
+        },
+      ],
+      main: {
+        temp: current.temperature_2m,
+        feels_like: current.apparent_temperature,
+        humidity: current.relative_humidity_2m,
+      },
+      wind: {
+        speed: current.wind_speed_10m / 3.6,
+        deg: current.wind_direction_10m,
+      },
+      dt: Math.floor(new Date(current.time).getTime() / 1000),
+      timezone: data.utc_offset_seconds,
+      visibility: 10000,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur météo" });
+  }
 }

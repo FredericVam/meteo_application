@@ -6,6 +6,7 @@ Check the current weather on any city on the planet. Switch between metric and i
 
 ## Features
 
+
 1. User's ability to search cities
 
 2. Current local time and date
@@ -27,6 +28,11 @@ Check the current weather on any city on the planet. Switch between metric and i
 2. `cd weather-app`
 
 3. `npm install`
+
+
+
+set NODE_OPTIONS=--openssl-legacy-provider
+npm run dev
 
 4. Log-in to [Openweathermap.com](https://openweathermap.org/)
 
