@@ -1,4 +1,4 @@
-export default async function handler(req, res) {// fonction exécutée quand on fais : fetch("/api/data", {...})
+export default async function handler(req, res) {// fonction exécutée quand on fais : fetch("/api/data..
 
   try {
     const { city, latitude, longitude } = req.body;//Données reçues, vient de : JSON.stringify
